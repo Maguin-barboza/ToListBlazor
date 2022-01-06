@@ -1,9 +1,43 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<div>
+    <table class="table">
+        <tr>
+            <th>Tarefa</th>
+            <th>Tempo Restante</th>
+        </tr>
+        @foreach (Tarefa tar in Tarefa.Tarefas)
+        {
+            <tr>
+                <td>@tar.Descricao</td>
+                <td>@tar.TempoEstimado</td>
+            </tr>
+        }
 
-<h1>Hello, world!</h1>
+    </table>
+</div>
 
-Welcome to your new app.
+<hr />
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div>
+    <p>Descrição: <input type="text" @bind="tarefa.Descricao" /> </p>
+    <p>Tempo estimado: <input type="time" @bind="tarefa.TempoEstimado" /> </p>
+
+    <button @onclick="(() => AdicionarTarefa())">AdicionarTarefa</button>
+</div>
+
+
+@code {
+    private Tarefa tarefa = new Tarefa();
+
+    private void AdicionarTarefa()
+    {
+        Tarefa.AddTarefa(tarefa);
+        tarefa = new Tarefa();
+    }
+
+    private void RemoverTarefa(Tarefa tarefa)
+    {
+        Tarefa.RemoveTarefa(tarefa);
+    }
+}
